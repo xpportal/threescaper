@@ -61,18 +61,18 @@
 
 		<script type="module">
 
-			import Stats from './js/examples/jsm/libs/stats.module.js';
+			// import Stats from 'https://cdn.skypack.dev/three@0.135.0/examples/jsm/libs/stats.module.js';
 
-			import * as THREE from './js/build/three.module.js';
+			import * as THREE from 'https://cdn.skypack.dev/three@0.135.0';
 
 			import { PointerLockControls } from './js/PointerLockControls.js';
 
 			import { GUI } from './js/dat.gui.module.js';
-			import { DDSLoader } from './js/examples/jsm/loaders/DDSLoader.js';
-			import { MTLLoader } from './js/examples/jsm/loaders/MTLLoader.js';
-			import { OBJLoader } from './js/examples/jsm/loaders/OBJLoader.js';
-			import { GLTFExporter } from './js/examples/jsm/exporters/GLTFExporter.js'
-			import { Water } from './js/Water.js';
+			import { DDSLoader } from 'https://cdn.skypack.dev/three@0.135.0/examples/jsm/loaders/DDSLoader.js';
+			import { MTLLoader } from 'https://cdn.skypack.dev/three@0.135.0/examples/jsm/loaders/MTLLoader.js';
+			import { OBJLoader } from 'https://cdn.skypack.dev/three@0.135.0/examples/jsm/loaders/OBJLoader.js';
+			import { GLTFExporter } from 'https://cdn.skypack.dev/three@0.135.0/examples/jsm/exporters/GLTFExporter.js'
+			// import { Water } from './js/Water.js';
 
 			let camera, scene, renderer, controls, water;
 
@@ -100,7 +100,7 @@
 			const vertex = new THREE.Vector3();
 			const color = new THREE.Color();
 
-			const stats = new Stats();
+			// const stats = new Stats();
 
 			init();
 			animate();
@@ -333,34 +333,34 @@
 
 				// WATER
 
-				const waterGeometry = new THREE.PlaneGeometry( 10000, 10000 );
-				waterGeometry.translate(0, 0, -0.01);
+				// const waterGeometry = new THREE.PlaneGeometry( 10000, 10000 );
+				// waterGeometry.translate(0, 0, -0.01);
 
-				water = new Water(
-					waterGeometry,
-					{
-						textureWidth: 512,
-						textureHeight: 512,
-						waterNormals: new THREE.TextureLoader().load( './textures/waternormals.jpg', function ( texture ) {
+				// water = new Water(
+				// 	waterGeometry,
+				// 	{
+				// 		textureWidth: 512,
+				// 		textureHeight: 512,
+				// 		waterNormals: new THREE.TextureLoader().load( './textures/waternormals.jpg', function ( texture ) {
 
-							texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				// 			texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
-						} ),
-						sunDirection: new THREE.Vector3(),
-						sunColor: 0xffffff,
-						waterColor: 0x2d6c75,
-						distortionScale: 3.7,
-						size: 0.1,
-						fog: scene.fog !== undefined
-					}
-				);
+				// 		} ),
+				// 		sunDirection: new THREE.Vector3(),
+				// 		sunColor: 0xffffff,
+				// 		waterColor: 0x2d6c75,
+				// 		distortionScale: 3.7,
+				// 		size: 0.1,
+				// 		fog: scene.fog !== undefined
+				// 	}
+				// );
 
-				water.rotation.x = - Math.PI / 2;
+				// water.rotation.x = - Math.PI / 2;
 
-				const waterUniforms = water.material.uniforms;
-				waterUniforms.size.value = 0.05;
+				// const waterUniforms = water.material.uniforms;
+				// waterUniforms.size.value = 0.05;
 
-				scene.add( water );
+				// scene.add( water );
 
 				// LOAD MODEL
 
@@ -504,7 +504,7 @@
 				renderer.shadowMap.enabled = true;
 				renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 				document.body.appendChild( renderer.domElement );
-				document.body.appendChild( stats.dom );
+				// document.body.appendChild( stats.dom );
 
 				// GUI
 
@@ -550,23 +550,17 @@
 				folderLighting.addColor( params, 'directional3Color' ).onChange( function( val ) { directionalLightBack3.color.setHex( val ); }).name( 'db3 color');
 			  //	folderLighting.open();
 
-				const folderWater = gui.addFolder( 'Water' );
-				folderWater.add( waterUniforms.distortionScale, 'value', 0, 8, 0.1 ).name( 'distortionScale' );
-				folderWater.add( waterUniforms.size, 'value', 0.01, 1, 0.01 ).name( 'size' );
-				folderWater.add( waterUniforms.waterColor.value, 'r', 0.0, 1, 0.01 ).name( 'r' );
-				folderWater.add( waterUniforms.waterColor.value, 'g', 0.0, 1, 0.01 ).name( 'g' );
-				folderWater.add( waterUniforms.waterColor.value, 'b', 0.0, 1, 0.01 ).name( 'b' );
+				// const folderWater = gui.addFolder( 'Water' );
+				// folderWater.add( waterUniforms.distortionScale, 'value', 0, 8, 0.1 ).name( 'distortionScale' );
+				// folderWater.add( waterUniforms.size, 'value', 0.01, 1, 0.01 ).name( 'size' );
+				// folderWater.add( waterUniforms.waterColor.value, 'r', 0.0, 1, 0.01 ).name( 'r' );
+				// folderWater.add( waterUniforms.waterColor.value, 'g', 0.0, 1, 0.01 ).name( 'g' );
+				// folderWater.add( waterUniforms.waterColor.value, 'b', 0.0, 1, 0.01 ).name( 'b' );
 
 
 				// WINDOW RESIZE
 
 				window.addEventListener( 'resize', onWindowResize, false );
-
-				// Export scene as GLTF (GLB)
-				const exporter = new GLTFExporter();
-				exporter.parse(scene, (result) => {
-					save(new Blob([result], {type: 'application/octet-stream'}), 'threescaper.glb')
-				}, (error) => console.error(error), {binary: true})
 
 			}
 
@@ -581,7 +575,7 @@
 
 			function animate() {
 
-				water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
+				// water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
 
 				requestAnimationFrame( animate );
 
@@ -669,9 +663,34 @@
 
 				prevTime = time;
 
-				stats.update();
+				// stats.update();
 
 				renderer.render( scene, camera );
+
+			}
+
+			
+			function save( blob, filename ) {
+				const link = document.createElement( 'a' );
+				link.style.display = 'none';
+				document.body.appendChild( link ); // Firefox workaround, see #6594
+
+				link.href = URL.createObjectURL( blob );
+				link.download = filename;
+				link.click();
+			}
+
+
+			function exportGlb(scene, filename) {
+				const exporter = new GLTFExporter();
+				const options = { binary: true };
+
+				exporter.parse(
+					scene,
+					(buffer) => save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), `${filename}.glb` ),
+					(error) => console.error('FAILED TO EXPORT', filename, error),
+					options
+				);
 
 			}
 
@@ -730,8 +749,11 @@
 								var obj3D = loader.parse(objstring);
 								console.log(obj3D)
 								scene.add(parseTownscape(obj3D, materials))
-
+								
+								// Export scene as GLTF (GLB)
+								exportGlb(scene, file.name.slice(0, -4));
 						} );
+
 		      };
 		      reader.readAsText(file);
 		      return false;
