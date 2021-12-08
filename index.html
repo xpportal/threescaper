@@ -71,6 +71,7 @@
 			import { DDSLoader } from './js/examples/jsm/loaders/DDSLoader.js';
 			import { MTLLoader } from './js/examples/jsm/loaders/MTLLoader.js';
 			import { OBJLoader } from './js/examples/jsm/loaders/OBJLoader.js';
+			import { GLTFExporter } from './js/examples/jsm/exporters/GLTFExporter.js'
 			import { Water } from './js/Water.js';
 
 			let camera, scene, renderer, controls, water;
@@ -560,6 +561,12 @@
 				// WINDOW RESIZE
 
 				window.addEventListener( 'resize', onWindowResize, false );
+
+				// Export scene as GLTF (GLB)
+				const exporter = new GLTFExporter();
+				exporter.parse(scene, (result) => {
+					save(new Blob([result], {type: 'application/octet-stream'}), 'threescaper.glb')
+				}, (error) => console.error(error), {binary: true})
 
 			}
 
